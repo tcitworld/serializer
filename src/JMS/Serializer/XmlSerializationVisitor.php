@@ -289,6 +289,7 @@ class XmlSerializationVisitor extends AbstractVisitor
                 $defaultNamespace = $this->getClassDefaultNamespace($this->objectMetadataStack->top());
                 $element = $this->createElement($elementName, $defaultNamespace);
             }
+            $this->currentNode->appendChild($element);
             $this->setCurrentNode($element);
         }
 
@@ -303,8 +304,8 @@ class XmlSerializationVisitor extends AbstractVisitor
         if ($addEnclosingElement) {
             $this->revertCurrentNode();
 
-            if ($this->nodeNotEmpty($element) || ((!$metadata->xmlCollection || !$metadata->xmlCollectionSkipWhenEmpty) && $node === null && $v !== null && !$context->isVisiting($v))) {
-                $this->currentNode->appendChild($element);
+            if (!($this->nodeNotEmpty($element) || ((!$metadata->xmlCollection || !$metadata->xmlCollectionSkipWhenEmpty) && $node === null && $v !== null && !$context->isVisiting($v)))) {
+                $this->currentNode->removeChild($element);
             }
         }
 
