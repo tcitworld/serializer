@@ -139,6 +139,10 @@ class XmlDriver extends AbstractFileDriver
                         $isExpose = 'true' === strtolower($expose);
                     }
 
+                    if (null !== $excludeIf = $pElem->attributes()->{'exclude-if'}) {
+                        $pMetadata->excludeIfExpression =$excludeIf;
+                    }
+
                     if (null !== $version = $pElem->attributes()->{'since-version'}) {
                         $pMetadata->sinceVersion = (string) $version;
                     }
